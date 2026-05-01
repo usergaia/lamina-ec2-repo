@@ -7,3 +7,4 @@ echo "Installing essential tools..."
 sudo dnf install git curl wget gcc gcc-c++ make -y
 
 echo "Setup complete!"
+.
