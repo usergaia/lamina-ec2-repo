@@ -8,17 +8,16 @@ echo "Installing essential tools..."
 sudo dnf install -y git
 
 echo "Installing MariaDB server..."
-sudo dnf install mariadb105-server -y
+sudo dnf install -y mariadb105-server
 
 echo "Starting MariaDB..."
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 
-echo "Installing Python tools for Flask app..."
-sudo dnf install python3 python3-pip -y
+echo "Installing Flask dependencies..."
+sudo dnf install -y python3 python3-pip
+python3 -m pip install --user flask mysql-connector-python
+python3 -m pip install --user flask mysql-connector-python python-dotenv
 
 echo "Setup complete!"
-echo "Next steps:"
-echo "1. Run: sudo mysql_secure_installation"
-echo "2. Run: sudo mysql"
-echo "3. Create cloud_db and cloud_user using the SQL commands from your instructions."
+
