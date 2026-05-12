@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Docker Flask Lab</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="panel">
+        <p class="eyebrow">Docker Lab</p>
+        <h1>w5 task</h1>
+        <p class="lead">flask docker test (html,js,python)</p>
+
+        <div class="actions">
+          <button id="refresh-status" type="button">Refresh Status</button>
+          <a href="/health">Open Flask Health</a>
+        </div>
+      </section>
+
+      <section class="status-grid" aria-live="polite">
+        <article class="status-card">
+          <span class="label">Python</span>
+          <h2 id="flask-status">Checking...</h2>
+          <p id="flask-message">Waiting for Flask API response.</p>
+        </article>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

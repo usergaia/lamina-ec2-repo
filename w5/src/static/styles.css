@@ -1,0 +1,101 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 24px;
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 720px;
+}
+
+.panel {
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #2563eb;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 12px;
+}
+
+.lead {
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+button,
+a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  background: #f3f3f3;
+  color: #222;
+}
+
+a {
+  color: #0645ad;
+}
+
+.status-grid {
+  margin-top: 20px;
+}
+
+.status-card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.label {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 8px 0;
+}
+
+.status-card p {
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  body {
+    margin: 16px;
+  }
+}
