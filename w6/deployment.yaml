@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lamina-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lamina-flask
+  template:
+    metadata:
+      labels:
+        app: lamina-flask
+    spec:
+      containers:
+        - name: lamina-flask
+          image: ghcr.io/usergaia/lamina-flask:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
