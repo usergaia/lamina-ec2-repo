@@ -1,0 +1,18 @@
+# Local .terraform directories (provider plugins, modules)
+.terraform/
+
+# .tfstate files — contain resource IDs and can leak secrets
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# .tfvars files — often hold sensitive values (passwords, keys)
+*.tfvars
+*.tfvars.json
+
+# CLI configuration files
+.terraformrc
+terraform.rc
