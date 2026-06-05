@@ -4,8 +4,9 @@ on:
   push:
     branches: [main]
     paths:
-      - 'w5/**'
-      - '.github/workflows/build-and-push.yml'
+      - "w5/**"
+      - "w8/**"
+      - ".github/workflows/build-and-push.yml"
   workflow_dispatch:
 
 permissions:
@@ -17,8 +18,29 @@ env:
   IMAGE_NAME: ${{ github.repository_owner }}/lamina-flask
 
 jobs:
-  build-and-push:
+  test:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r w5/src/requirements.txt pytest
+
+      - name: Run tests
+        run: |
+          pytest w8/tests -v
+
+  build-and-push-docker-image:
+    runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v4
