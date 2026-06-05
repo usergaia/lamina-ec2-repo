@@ -1,12 +1,11 @@
-name: Build and Push Docker Image
+name: W5 · Flask Image
 
 on:
   push:
     branches: [main]
     paths:
       - "w5/**"
-      - "w8/**"
-      - ".github/workflows/build-and-push.yml"
+      - ".github/workflows/w5-flask.yml"
   workflow_dispatch:
 
 permissions:
@@ -35,8 +34,9 @@ jobs:
           pip install -r w5/src/requirements.txt pytest
 
       - name: Run tests
-        run: |
-          pytest w8/tests -v
+        run: pytest w5/tests -v
+        env:
+          PYTHONPATH: w5/src
 
   build-and-push-docker-image:
     runs-on: ubuntu-latest
