@@ -1,0 +1,81 @@
+name: W8 · Quote of the Day
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_fetch:
+        description: "Ignore cache and fetch a fresh quote (testing)"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - "w8/src/**"
+      - ".github/workflows/w8-quotes.yml"
+  schedule:
+    - cron: "0 21 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install
+        working-directory: w8/src
+        run: npm install
+      - name: Test
+        working-directory: w8/src
+        run: npm test
+
+  build-and-deploy-quote:
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compute reset-window key (rolls at 05:00 PHT)
+        id: d
+        run: echo "key=$(date -u -d '+3 hours' +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore cached quote
+        if: ${{ inputs.force_fetch != true }}
+        uses: actions/cache@v4
+        with:
+          path: w8/src/cache
+          key: quote-${{ steps.d.outputs.key }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build page (cache-or-fetch)
+        working-directory: w8/src
+        env:
+          QUOTES_API_KEY: ${{ secrets.QUOTES_API_KEY }}
+          FORCE_FETCH: ${{ inputs.force_fetch }}
+        run: node build.js
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: w8/src/dist
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
